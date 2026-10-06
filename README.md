@@ -1,122 +1,191 @@
 <h1 align="center">AutoML-Tool</h1>
 
 <p align="center">
-  <strong>Python Shiny prototype for guided machine-learning automation.</strong><br>
-  Supports data upload, preprocessing, encoding, feature generation, model comparison, model selection, and prediction flow.
-</p>
-
-
-
-<p align="center">
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/AjaySoni-Dev/AutoML-Tool?style=social">
-  <img alt="GitHub forks" src="https://img.shields.io/github/forks/AjaySoni-Dev/AutoML-Tool?style=social">
+  <strong>Guided Python Shiny prototype for end-to-end tabular machine-learning workflows.</strong><br>
+  Upload data, preprocess it, encode categories, generate polynomial features, compare baseline models, select a model, and produce predictions through one interactive interface.
 </p>
 
 <p align="center">
-  <img alt="status: prototype" src="https://img.shields.io/badge/status-prototype-blue">
-  <img alt="stack: Python / Shiny" src="https://img.shields.io/badge/stack-Python%20/%20Shiny-informational">
-  <img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-green">
+  <img alt="Status" src="https://img.shields.io/badge/status-prototype-blue">
+  <img alt="Python" src="https://img.shields.io/badge/language-Python-3776AB">
+  <img alt="Framework" src="https://img.shields.io/badge/framework-Shiny-informational">
+  <img alt="ML" src="https://img.shields.io/badge/ML-scikit--learn-orange">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
 <p align="center">
   <a href="#overview">Overview</a> ·
-  <a href="#implemented-workflow">Implemented Workflow</a> ·
-  <a href="#repository-structure">Repository Structure</a> ·
-  <a href="#run-locally">Run Locally</a> ·
-  <a href="#limitations">Limitations</a>
+  <a href="#what-this-repo-contains">Contents</a> ·
+  <a href="#implemented-workflow">Workflow</a> ·
+  <a href="#models-and-preprocessing">Models</a> ·
+  <a href="#run-locally">Run Locally</a>
 </p>
 
 ---
 
 ## Overview
 
-**AutoML-Tool** is a Python-based Shiny app that demonstrates a guided AutoML workflow. Instead of only training one fixed model, the app is structured around common ML steps: upload data, impute missing values, change data types, encode categorical features, generate polynomial features, select features, compare models, choose a model, and make predictions.
+**AutoML-Tool** is a compact Python Shiny application that exposes a guided tabular-ML workflow through a browser interface.
 
-The implementation is currently contained mainly in `app.py`, making it simple to inspect and run, but future versions should split the logic into modules.
+The current application is implemented primarily in <code>app.py</code> and combines data preparation, feature transformation, baseline model comparison, model selection, and interactive prediction.
 
-## Implemented Workflow
-
-```text
+~~~text
 Upload dataset
-        ↓
-Handle missing values
-        ↓
-Adjust data types
-        ↓
-Encode categorical variables
-        ↓
-Generate polynomial/interaction features
-        ↓
-Select features
-        ↓
-Compare regression or classification models
-        ↓
-Choose final model
-        ↓
-Provide prediction inputs
-```
+   ↓
+Prepare columns / missing values
+   ↓
+Encode categorical data
+   ↓
+Optional polynomial features
+   ↓
+Select target / features
+   ↓
+Train and compare baseline models
+   ↓
+Choose a fitted model
+   ↓
+Enter feature values and predict
+~~~
 
-## What Is Actually Implemented
+It is an educational AutoML-style prototype, not a production AutoML platform or managed model-training service.
 
-- Python Shiny UI/server app.
-- Preprocessing helper functions.
-- Missing-value imputation workflow.
-- Data type conversion workflow.
-- Encoding workflow.
-- Polynomial feature workflow.
-- Feature selection workflow.
-- Model comparison for regression and classification.
-- Model selection and prediction input sections.
-- Quick setup guide in `how-to-run.txt`.
+---
 
-## Repository Structure
+## What This Repo Contains
 
 | File | Purpose |
 |---|---|
-| `app.py` | Main Python Shiny application containing UI, server logic, preprocessing, model comparison, and prediction flow. |
-| `how-to-run.txt` | Setup instructions with required packages and run command. |
-| `README.md` | Original documentation. |
-| `LICENSE` | MIT license. |
+| <code>app.py</code> | Shiny UI/server, preprocessing helpers, model training/comparison, and prediction workflow. |
+| <code>how-to-run.txt</code> | Minimal dependency and launch instructions. |
+| <code>README.md</code> | Project documentation. |
+| <code>LICENSE</code> | MIT License. |
 
-## Main Libraries
+---
 
-- `shiny`
-- `pandas`
-- `scikit-learn`
-- `numpy`
+## Implemented Workflow
+
+| Stage | Implementation |
+|---|---|
+| Data upload | Tabular dataset ingestion through the Shiny interface. |
+| Missing values | Interactive preprocessing path for handling missing data. |
+| Type handling | User-guided feature/data-type adjustments. |
+| Categorical encoding | <code>OneHotEncoder</code> and <code>LabelEncoder</code>. |
+| Feature expansion | Degree-2 <code>PolynomialFeatures</code> support for selected inputs. |
+| Feature selection | User-controlled feature selection before training. |
+| Train/test split | scikit-learn <code>train_test_split</code>. |
+| Regression baselines | <code>LinearRegression</code> and <code>RandomForestRegressor</code>. |
+| Classification baselines | <code>LogisticRegression</code>, linear-kernel <code>SVC</code>, and <code>RandomForestClassifier</code>. |
+| Model comparison | Candidate models are trained and evaluated for the selected task. |
+| Prediction | A fitted selected model receives values from dynamically generated inputs. |
+
+---
+
+## Models and Preprocessing
+
+~~~text
+pandas
+NumPy
+scikit-learn
+├── preprocessing
+│   ├── OneHotEncoder
+│   ├── LabelEncoder
+│   └── PolynomialFeatures
+├── linear_model
+│   ├── LogisticRegression
+│   └── LinearRegression
+├── ensemble
+│   ├── RandomForestRegressor
+│   └── RandomForestClassifier
+├── svm
+│   └── SVC
+└── model_selection
+    └── train_test_split
+~~~
+
+The tool does not claim automatic hyperparameter optimization, experiment tracking, production model registry, or universal task inference.
+
+---
+
+## User Flow
+
+~~~text
+Launch app
+   ↓
+Upload dataset
+   ↓
+Configure preprocessing
+   ↓
+Choose target and features
+   ↓
+Generate optional polynomial features
+   ↓
+Train / compare available models
+   ↓
+Select model
+   ↓
+Enter prediction values
+   ↓
+View predicted output
+~~~
+
+---
+
+## Architecture
+
+~~~text
+app.py
+├── Data/preprocessing helpers
+├── Feature transformation helpers
+├── Model training/comparison helpers
+├── Prediction helper
+├── Shiny UI
+└── Shiny server / reactive workflow
+~~~
+
+The implementation uses module-level mutable workflow state in places. That is acceptable for a local learning prototype, but it should not be treated as evidence of safe multi-user isolation for a hosted production service.
+
+---
+
+## Repository Structure
+
+~~~text
+AutoML-Tool/
+├── app.py
+├── how-to-run.txt
+├── README.md
+└── LICENSE
+~~~
+
+---
 
 ## Run Locally
 
-Install dependencies:
-
-```bash
+~~~bash
 pip install shiny pandas scikit-learn numpy
-```
-
-Run the app:
-
-```bash
 shiny run --reload app.py
-```
+~~~
 
-## Limitations
+---
 
-- Current implementation is a prototype and not a production AutoML system.
-- The app is mostly a single large file, which makes maintenance harder.
-- No saved experiment tracking is implemented yet.
-- No exported trained model file is generated by default.
-- No Dockerfile or deployment configuration is included.
-- Advanced AutoML features like Optuna search, SHAP explanations, model cards, and pipeline export are not implemented yet.
+## Validation & Current Maturity
 
-## Recommended Improvements
+AutoML-Tool is a **functional learning prototype**.
 
-- Split preprocessing, modeling, evaluation, and UI into separate modules.
-- Add model export/download.
-- Add train/test metrics table and confusion matrix.
-- Add automatic task detection with clearer user controls.
-- Add a sample dataset.
-- Add screenshots and demo GIF.
+The repository currently has no automated tests, package metadata, pinned environment, model-registry contract, experiment database, hyperparameter-search framework, model-card layer, or production deployment configuration.
+
+Model quality depends on the uploaded dataset, target definition, preprocessing choices, and baseline algorithms used.
+
+---
+
+## Important Notes
+
+- A comparison score on an uploaded dataset is not proof of deployment-grade generalization.
+- Users should inspect class balance, leakage, data quality, and train/test methodology before interpreting results.
+- Healthcare, finance, or other high-impact datasets require domain-specific validation beyond this prototype.
+- Polynomial expansion can increase feature count quickly and should be used deliberately.
+
+---
 
 ## License
 
-This project is licensed under the MIT License.
+Released under the **MIT License**. See <code>LICENSE</code>.
